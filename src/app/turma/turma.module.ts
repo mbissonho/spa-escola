@@ -1,3 +1,4 @@
+import { SharedModule } from './../shared/shared.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -7,6 +8,9 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+
+
+
 import { TurmaMasterDetailComponent } from './turma-master-detail/turma-master-detail.component';
 import { TurmaDetailComponent } from './turma-detail/turma-detail.component';
 
@@ -21,7 +25,9 @@ import { TurmaDetailComponent } from './turma-detail/turma-detail.component';
     MatCardModule,
     MatButtonModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+
+    SharedModule
   ],
   exports: [
     TurmaMasterDetailComponent

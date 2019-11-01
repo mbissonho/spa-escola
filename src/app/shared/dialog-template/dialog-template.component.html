@@ -1,0 +1,8 @@
+<h1 mat-dialog-title>Atenção</h1>
+<div mat-dialog-content>
+  <p>Confirma a exclusão?</p>
+</div>
+<div mat-dialog-actions>
+  <button mat-flat-button color="warn" [mat-dialog-close]="true">Sim</button>
+  <button mat-flat-button color="primary" (click)="close()">Cancelar</button>
+</div>

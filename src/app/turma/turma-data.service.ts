@@ -1,3 +1,4 @@
+import { Turma } from './turma-master-detail/turma-master-detail.component';
 
 import { environment } from './../../environments/environment';
 import { Injectable } from '@angular/core';
@@ -20,16 +21,16 @@ export class TurmaDataService {
     return this.http.get(this.resourceUrl).toPromise();
   }
 
-  save(){
-
+  save(turma: Turma){
+    return this.http.post(this.resourceUrl, turma).toPromise();
   }
 
-  update(){
-
+  update(turma: Turma){
+    return this.http.put(`${this.resourceUrl}/${turma.id}`, turma).toPromise();
   }
 
-  delete(){
-
+  delete(turmaId: number){
+    return this.http.delete(`${this.resourceUrl}/${turmaId}`).toPromise();
   }
 
 }

@@ -1,19 +1,22 @@
 <mat-card  id="turma-card" class="mt-5">
-        <mat-card-header>
-          <mat-card-title>{{ cardHeaderLabel }}</mat-card-title>
-        </mat-card-header>
-        <mat-card-content class="p-4">
-            <form autocomplete="off" [formGroup]="form">
-              <mat-form-field class="form-field">
-                  <input matInput formControlName="serie" placeholder="Série">
-              </mat-form-field>
-              <mat-form-field class="form-field">
-                  <input matInput formControlName="titulo" placeholder="Título">
-              </mat-form-field>
-            </form>
-        </mat-card-content>
-        <mat-card-actions>
-          <button mat-raised-button color="primary" [disabled]="form.invalid" (click)="submitForm()"> {{ toggleSaveButtonLabel() }}</button>
-          <button *ngIf="enableVerAlunosButton()" mat-raised-button color="primary">VER ALUNOS</button>
-        </mat-card-actions>
-    </mat-card>
+    <mat-card-header>
+      <mat-card-title>{{ toggleCardHeaderLabel() }}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="p-4">
+        <form autocomplete="off" [formGroup]="form">
+          <mat-form-field class="form-field">
+              <input matInput formControlName="serie" placeholder="Série">
+          </mat-form-field>
+          <mat-form-field class="form-field">
+              <input matInput formControlName="titulo" placeholder="Título">
+          </mat-form-field>
+        </form>
+    </mat-card-content>
+    <mat-card-actions>
+      <div class="clearfix">
+        <button mat-raised-button color="primary" [disabled]="form.invalid || form.untouched" (click)="submitForm()"> {{ toggleSaveButtonLabel() }}</button>
+        <button *ngIf="enableVerAlunosButton()" mat-raised-button color="primary">VER ALUNOS</button>
+        <button *ngIf="enableExcluirButton()" class="float-right" mat-flat-button color="warn" [disabled]="form.invalid" (click)="delete()">EXCLUIR</button> 
+      </div>
+    </mat-card-actions>
+</mat-card>
