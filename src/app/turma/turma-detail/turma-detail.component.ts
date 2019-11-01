@@ -36,7 +36,7 @@ export class TurmaDetailComponent implements OnInit {
     this.updateTurmaObject(this.turma);
   }
 
-  configForm(){
+  private configForm(){
     this.form = this.formBuilder.group({
       id: [],
       nomeDoProfessor: [null, Validators.required],
@@ -97,6 +97,7 @@ export class TurmaDetailComponent implements OnInit {
   submitForm(){
     this.turma.serie = this.form.get('serie').value;
     this.turma.titulo = this.form.get('titulo').value;
+    this.turma.nomeDoProfessor = this.form.get('nomeDoProfessor').value;
     if(this.cardState === cardStates.ON_CREATE){
       this.save();
     } else {

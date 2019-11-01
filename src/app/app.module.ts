@@ -1,4 +1,4 @@
-import { MatTableDataSource } from '@angular/material/table';
+import { AlunoModule } from './aluno/aluno.module';
 import { TurmaModule } from './turma/turma.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -7,7 +7,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
-import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -17,10 +17,9 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    HttpClientModule,
-    MatSnackBarModule,
-
-    TurmaModule
+    
+    TurmaModule,
+    AlunoModule
   ],
   providers: [],
   bootstrap: [AppComponent]
