@@ -5,6 +5,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 
 export class Turma {
   id: number;
+  nomeDoProfessor: string;
   serie: string;
   titulo: string;
   alunos: [];
@@ -22,7 +23,7 @@ export class TurmaMasterDetailComponent implements OnInit {
   turmaToViewOrUpdate = new Turma();
 
   //Table
-  displayedColumns: string[] = ['id', 'serie', 'titulo'];
+  displayedColumns: string[] = ['id', 'nomeDoProfessor', 'serie', 'titulo'];
   public dataSource: Turma[];
 
   //Card

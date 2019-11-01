@@ -39,6 +39,7 @@ export class TurmaDetailComponent implements OnInit {
   configForm(){
     this.form = this.formBuilder.group({
       id: [],
+      nomeDoProfessor: [null, Validators.required],
       serie: [null, Validators.required],
       titulo: [null, Validators.required]
     });
@@ -103,10 +104,6 @@ export class TurmaDetailComponent implements OnInit {
     }
     this.form.reset();
   }
-
-  
-
-
 
   setOnViewUpdateState(){
     this.cardState = cardStates.ON_VIEW_UPDATE;
