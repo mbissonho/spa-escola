@@ -1,17 +1,11 @@
+import { Aluno } from './../../models';
 import { ExceptionHandlerService } from 'src/app/exception-handler.service';
-import { Turma } from './../../turma/turma-master-detail/turma-master-detail.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlunoDataService } from './../aluno-data.service';
 import { AlunoDetailComponent } from './../aluno-detail/aluno-detail.component';
 import { Component, OnInit, ViewChild } from '@angular/core';
 
-export class Aluno {
-  id: number;
-  nome: string;
-  quantidadeDeFaltas: number;
-  mediaDeNotas: number;
-  turma = new Turma();
-}
+
 
 @Component({
   selector: 'app-aluno-master-detail',

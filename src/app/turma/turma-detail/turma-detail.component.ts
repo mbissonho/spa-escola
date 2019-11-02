@@ -1,15 +1,14 @@
+import { Turma } from './../../models';
+import { ExceptionHandlerService } from 'src/app/exception-handler.service';
 import { Router } from '@angular/router';
 import { detailCardStates } from './../../commons';
 import { DialogTemplateComponent } from './../../shared/dialog-template/dialog-template.component';
-import { Turma } from './../turma-master-detail/turma-master-detail.component';
 import { Component, OnInit, Input, Output } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { TurmaDataService } from '../turma-data.service';
 import { MessageService } from 'src/app/message.service';
 import { MatDialog } from '@angular/material/dialog';
 import { EventEmitter } from '@angular/core';
-
-
 
 @Component({
   selector: 'app-turma-detail',
@@ -31,7 +30,8 @@ export class TurmaDetailComponent implements OnInit {
     private service: TurmaDataService,
     private messageService: MessageService,
     public dialog: MatDialog,
-    private router: Router
+    private router: Router,
+    private exceptionHandlerService: ExceptionHandlerService
   ) { }
 
   ngOnInit() {
@@ -42,9 +42,9 @@ export class TurmaDetailComponent implements OnInit {
   private configForm(){
     this.form = this.formBuilder.group({
       id: [],
-      nomeDoProfessor: [null, Validators.required],
-      serie: [null, Validators.required],
-      titulo: [null, Validators.required],
+      nomeDoProfessor: [null, [Validators.required, Validators.maxLength(50)]],
+      serie: [null, [Validators.required, Validators.maxLength(2)]],
+      titulo: [null, [Validators.required, Validators.maxLength(3)]],
       quantidadeDeAlunos: [null, null]
     });
   }
@@ -64,8 +64,9 @@ export class TurmaDetailComponent implements OnInit {
     .then((turma: Turma) => {
       this.messageService.doMessage(`Turma ${turma.titulo} criada com sucesso`);
       this.emitter.emit('resourceChanged');
-    }).catch(() => {
-
+      this.setOnCreateState();
+    }).catch((response: any) => { 
+      this.exceptionHandlerService.handle(response.error);
     });
   }
 
@@ -74,8 +75,9 @@ export class TurmaDetailComponent implements OnInit {
     .then((turma: Turma) => {
       this.messageService.doMessage(`Turma ${turma.titulo} atualizada com sucesso`);
       this.emitter.emit('resourceChanged');
-    }).catch(() => {
-
+      this.setOnCreateState();
+    }).catch((response: any) => { 
+      this.exceptionHandlerService.handle(response.error);
     });
   }
 
@@ -95,9 +97,8 @@ export class TurmaDetailComponent implements OnInit {
       this.messageService.doMessage(`Turma ${this.turma.titulo} excluída com sucesso`);
       this.setOnCreateState();
       this.emitter.emit('resourceChanged');
-    })
-    .catch(() => {
-
+    }).catch((response: any) => { 
+      this.exceptionHandlerService.handle(response.error);
     });
   }
 
@@ -108,7 +109,6 @@ export class TurmaDetailComponent implements OnInit {
     } else {
       this.update();
     }
-    this.setOnCreateState();
   }
 
   viewAlunos(){

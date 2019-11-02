@@ -1,4 +1,5 @@
-import { Turma } from './turma-master-detail/turma-master-detail.component';
+import { Turma } from './../models';
+
 
 import { environment } from './../../environments/environment';
 import { Injectable } from '@angular/core';

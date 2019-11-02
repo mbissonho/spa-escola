@@ -1,7 +1,8 @@
+import { Aluno } from './../models';
 import { environment } from './../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Aluno } from './aluno-master-detail/aluno-master-detail.component';
+
 
 @Injectable({
   providedIn: 'root'

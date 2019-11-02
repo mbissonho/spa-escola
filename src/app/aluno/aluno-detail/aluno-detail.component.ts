@@ -1,3 +1,4 @@
+import { Aluno } from './../../models';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { MessageService } from 'src/app/message.service';
@@ -5,7 +6,6 @@ import { AlunoDataService } from './../aluno-data.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { DialogTemplateComponent } from './../../shared/dialog-template/dialog-template.component';
 import { detailCardStates } from './../../commons';
-import { Aluno } from './../aluno-master-detail/aluno-master-detail.component';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ExceptionHandlerService } from 'src/app/exception-handler.service';
 
@@ -44,8 +44,8 @@ export class AlunoDetailComponent implements OnInit {
     this.form = this.formBuilder.group({
       id: [],
       nome: [null, Validators.required],
-      quantidadeDeFaltas: [null, Validators.required],
-      mediaDeNotas: [null, Validators.required],
+      quantidadeDeFaltas: [null, [Validators.required, Validators.maxLength(2)]],
+      mediaDeNotas: [null,[Validators.required, Validators.maxLength(3)]],
       turma: this.formBuilder.group({
         id: [ null, Validators.required ]
       })
@@ -67,8 +67,9 @@ export class AlunoDetailComponent implements OnInit {
     .then((aluno: Aluno) => {
       this.messageService.doMessage(`Aluno(a) ${aluno.nome} criado(a) com sucesso`);
       this.emitter.emit('resourceChanged');
-    }).catch(() => {
-
+      this.setOnCreateState();
+    }).catch((response: any) => { 
+      this.exceptionHandlerService.handle(response.error);
     });
   }
 
@@ -77,8 +78,9 @@ export class AlunoDetailComponent implements OnInit {
     .then((aluno: Aluno) => {
       this.messageService.doMessage(`Aluno(a) ${aluno.nome} atualizado(a) com sucesso`);
       this.emitter.emit('resourceChanged');
-    }).catch(() => {
-
+      this.setOnCreateState();
+    }).catch((response: any) => { 
+      this.exceptionHandlerService.handle(response.error);
     });
   }
 
@@ -95,11 +97,11 @@ export class AlunoDetailComponent implements OnInit {
     this.service.delete(this.aluno.id)
     .then(() => {
       this.messageService.doMessage(`Aluno(a) ${this.aluno.nome} excluído(a) com sucesso`);
-      this.setOnCreateState();
       this.emitter.emit('resourceChanged');
+      this.setOnCreateState();
     })
-    .catch(() => {
-
+    .catch((response: any) => { 
+      this.exceptionHandlerService.handle(response.error);
     });
   }
 
@@ -110,7 +112,6 @@ export class AlunoDetailComponent implements OnInit {
     } else {
       this.update();
     }
-    this.setOnCreateState();
   }
 
   setOnViewUpdateState(){
