@@ -1,15 +1,15 @@
+import { Router } from '@angular/router';
+import { detailCardStates } from './../../commons';
 import { DialogTemplateComponent } from './../../shared/dialog-template/dialog-template.component';
 import { Turma } from './../turma-master-detail/turma-master-detail.component';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { TurmaDataService } from '../turma-data.service';
 import { MessageService } from 'src/app/message.service';
 import { MatDialog } from '@angular/material/dialog';
+import { EventEmitter } from '@angular/core';
 
-enum cardStates {
-  ON_CREATE = 1,
-  ON_VIEW_UPDATE = 2
-}
+
 
 @Component({
   selector: 'app-turma-detail',
@@ -21,14 +21,17 @@ export class TurmaDetailComponent implements OnInit {
 
   @Input() turma = new Turma();
 
+  @Output() emitter: EventEmitter<any> = new EventEmitter();
+
   form: FormGroup;
-  cardState = cardStates.ON_CREATE;
+  cardState = detailCardStates.ON_CREATE;
 
   constructor(
     private formBuilder: FormBuilder,
     private service: TurmaDataService,
     private messageService: MessageService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -41,7 +44,8 @@ export class TurmaDetailComponent implements OnInit {
       id: [],
       nomeDoProfessor: [null, Validators.required],
       serie: [null, Validators.required],
-      titulo: [null, Validators.required]
+      titulo: [null, Validators.required],
+      quantidadeDeAlunos: [null, null]
     });
   }
 
@@ -59,6 +63,7 @@ export class TurmaDetailComponent implements OnInit {
     this.service.save(this.turma)
     .then((turma: Turma) => {
       this.messageService.doMessage(`Turma ${turma.titulo} criada com sucesso`);
+      this.emitter.emit('resourceChanged');
     }).catch(() => {
 
     });
@@ -68,13 +73,15 @@ export class TurmaDetailComponent implements OnInit {
     this.service.update(this.turma)
     .then((turma: Turma) => {
       this.messageService.doMessage(`Turma ${turma.titulo} atualizada com sucesso`);
+      this.emitter.emit('resourceChanged');
     }).catch(() => {
 
     });
   }
 
   delete(){
-    const dialogRef = this.dialog.open(DialogTemplateComponent, { width: '300px'});
+    const dialogRef = this.dialog.open(DialogTemplateComponent, 
+      { data: 'Confirma a exclusão da turma e todos seus alunos?',  width: '300px'});
     dialogRef.afterClosed().subscribe((shouldDelete) => {
       if(shouldDelete){
         this.confirmDelete();
@@ -86,8 +93,8 @@ export class TurmaDetailComponent implements OnInit {
     this.service.delete(this.turma.id)
     .then(() => {
       this.messageService.doMessage(`Turma ${this.turma.titulo} excluída com sucesso`);
-      this.form.reset();
       this.setOnCreateState();
+      this.emitter.emit('resourceChanged');
     })
     .catch(() => {
 
@@ -95,39 +102,43 @@ export class TurmaDetailComponent implements OnInit {
   }
 
   submitForm(){
-    this.turma.serie = this.form.get('serie').value;
-    this.turma.titulo = this.form.get('titulo').value;
-    this.turma.nomeDoProfessor = this.form.get('nomeDoProfessor').value;
-    if(this.cardState === cardStates.ON_CREATE){
+    this.turma = this.form.value;
+    if(this.cardState === detailCardStates.ON_CREATE){
       this.save();
     } else {
       this.update();
     }
-    this.form.reset();
+    this.setOnCreateState();
+  }
+
+  viewAlunos(){
+    this.router.navigateByUrl('/alunos/' + this.turma.id);
   }
 
   setOnViewUpdateState(){
-    this.cardState = cardStates.ON_VIEW_UPDATE;
+    this.cardState = detailCardStates.ON_VIEW_UPDATE;
   }
 
   setOnCreateState(){
-    this.cardState = cardStates.ON_CREATE;
+    this.form.reset();
+    this.turma = new Turma();
+    this.cardState = detailCardStates.ON_CREATE;
   }
 
   toggleCardHeaderLabel(){
-    return this.cardState === cardStates.ON_VIEW_UPDATE ? 'Em edição' : 'Nova turma';
+    return this.cardState === detailCardStates.ON_VIEW_UPDATE ? 'Em edição' : 'Nova turma';
   }
 
   toggleSaveButtonLabel(){
-    return this.cardState === cardStates.ON_VIEW_UPDATE ? 'ATUALIZAR' : 'SALVAR';
+    return this.cardState === detailCardStates.ON_VIEW_UPDATE ? 'ATUALIZAR' : 'SALVAR';
   }
 
   enableExcluirButton() {
-    return this.cardState === cardStates.ON_VIEW_UPDATE ? true : false;
+    return this.cardState === detailCardStates.ON_VIEW_UPDATE ? true : false;
   }
 
-  enableVerAlunosButton(){
-    return this.cardState === cardStates.ON_VIEW_UPDATE && this.turma.alunos.length ? true : false;
+  enableAlunosButton(){
+    return this.cardState === detailCardStates.ON_VIEW_UPDATE ? true : false;
   }
 
 }

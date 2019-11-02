@@ -5,10 +5,10 @@ import { Routes, RouterModule } from '@angular/router';
 
 
 const routes: Routes = [
-  { path: '', redirectTo: 'turma', pathMatch: 'full' },
-  { path: 'turma', component: TurmaMasterDetailComponent },
-  { path: 'aluno', component: AlunoMasterDetailComponent },
-  { path: '**', redirectTo: 'turma' }
+  { path: '', redirectTo: 'turmas', pathMatch: 'full' },
+  { path: 'turmas', component: TurmaMasterDetailComponent },
+  { path: 'alunos/:id', component: AlunoMasterDetailComponent },
+  { path: '**', redirectTo: 'turmas' }
 ];
 
 @NgModule({

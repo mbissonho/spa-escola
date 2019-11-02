@@ -1,6 +1,6 @@
 <h1 mat-dialog-title>Atenção</h1>
 <div mat-dialog-content>
-  <p>Confirma a exclusão?</p>
+  <p> {{ data ? data : 'Confirma a exclusão?' }}</p>
 </div>
 <div mat-dialog-actions>
   <button mat-flat-button color="warn" [mat-dialog-close]="true">Sim</button>

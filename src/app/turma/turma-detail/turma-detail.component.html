@@ -18,7 +18,7 @@
     <mat-card-actions>
       <div class="clearfix">
         <button mat-raised-button color="primary" [disabled]="form.invalid || form.untouched" (click)="submitForm()"> {{ toggleSaveButtonLabel() }}</button>
-        <button *ngIf="enableVerAlunosButton()" mat-raised-button color="primary">VER ALUNOS</button>
+        <button *ngIf="enableAlunosButton()" mat-raised-button color="primary" (click)="viewAlunos()">ALUNOS</button>
         <button *ngIf="enableExcluirButton()" class="float-right" mat-flat-button color="warn" [disabled]="form.invalid" (click)="delete()">EXCLUIR</button> 
       </div>
     </mat-card-actions>

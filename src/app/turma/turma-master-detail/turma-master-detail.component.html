@@ -23,5 +23,5 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr class="element-mat-row" mat-row *matRowDef="let row; columns: displayedColumns;" (click)="rowClicked(row)"></tr>
  </table>
- <app-turma-detail #card *ngIf="enableTurmaCard" [turma]="turmaToViewOrUpdate"></app-turma-detail>
+ <app-turma-detail #card *ngIf="enableTurmaCard" [turma]="turmaToViewOrUpdate" (emitter)="loadTurmas($event)" ></app-turma-detail>
 

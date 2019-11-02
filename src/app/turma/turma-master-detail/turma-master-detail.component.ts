@@ -2,13 +2,12 @@ import { TurmaDetailComponent } from './../turma-detail/turma-detail.component';
 import { TurmaDataService } from './../turma-data.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 
-
 export class Turma {
   id: number;
   nomeDoProfessor: string;
   serie: string;
   titulo: string;
-  alunos: [];
+  quantidadeDeAlunos: number;
 }
 
 @Component({
