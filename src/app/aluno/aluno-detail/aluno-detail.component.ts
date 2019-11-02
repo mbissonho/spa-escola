@@ -45,7 +45,7 @@ export class AlunoDetailComponent implements OnInit {
       id: [],
       nome: [null, Validators.required],
       quantidadeDeFaltas: [null, [Validators.required, Validators.maxLength(2)]],
-      mediaDeNotas: [null,[Validators.required, Validators.maxLength(3)]],
+      mediaDeNotas: [null,[ Validators.required, Validators.maxLength(3), Validators.pattern('[0-9]\\.[0-9]')]],
       turma: this.formBuilder.group({
         id: [ null, Validators.required ]
       })
