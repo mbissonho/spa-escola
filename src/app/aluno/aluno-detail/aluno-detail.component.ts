@@ -85,7 +85,7 @@ export class AlunoDetailComponent implements OnInit {
   }
 
   delete(){
-    const dialogRef = this.dialog.open(DialogTemplateComponent, { width: '300px'});
+    const dialogRef = this.dialog.open(DialogTemplateComponent, { width: '300px', data : 'Confirma a exclusão deste aluno?'});
     dialogRef.afterClosed().subscribe((shouldDelete) => {
       if(shouldDelete){
         this.confirmDelete();
