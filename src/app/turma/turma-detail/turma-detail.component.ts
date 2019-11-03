@@ -43,7 +43,7 @@ export class TurmaDetailComponent implements OnInit {
     this.form = this.formBuilder.group({
       id: [],
       nomeDoProfessor: [null, [Validators.required, Validators.maxLength(49)]],
-      serie: [null, [Validators.required, Validators.maxLength(2), Validators.pattern('[1-8]ª')]],
+      serie: [null, [Validators.required, Validators.maxLength(1), Validators.pattern('[1-8]')]],
       titulo: [null, [Validators.required, Validators.maxLength(3), Validators.minLength(3), Validators.pattern('^[0-9]*$')]],
       quantidadeDeAlunos: [null, null]
     });

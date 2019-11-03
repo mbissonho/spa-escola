@@ -1,8 +1,8 @@
 export class Turma {
     id: number;
     nomeDoProfessor: string;
-    serie: string;
-    titulo: string;
+    serie: number;
+    titulo: number;
     quantidadeDeAlunos: number;
 }
 

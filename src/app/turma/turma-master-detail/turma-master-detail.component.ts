@@ -47,7 +47,7 @@ export class TurmaMasterDetailComponent implements OnInit {
   loadTurmas(){
     this.service.load()
     .then((data: any) => {
-      this.dataSource = data.content;
+      this.dataSource = data;
     })
     .catch(() => {
       alert('Erro!');
