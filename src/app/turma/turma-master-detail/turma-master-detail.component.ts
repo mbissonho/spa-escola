@@ -17,7 +17,7 @@ export class TurmaMasterDetailComponent implements OnInit {
   turmaToViewOrUpdate = new Turma();
 
   //Table
-  displayedColumns: string[] = ['id', 'nomeDoProfessor', 'serie', 'titulo'];
+  displayedColumns: string[] = ['id', 'nomeDoProfessor', 'serie', 'titulo', 'quantidadeDeAlunos'];
   public dataSource: Turma[];
 
   //Card
