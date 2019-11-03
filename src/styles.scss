@@ -8,3 +8,24 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     margin: 50px auto;
 }
 
+/* Commons Styles*/
+
+.custom-table {
+    width: 100%;
+
+    .element-mat-row {
+        cursor: pointer;
+    }
+
+    .element-mat-row:hover{
+        background-color: #ededed;;
+    }
+
+}
+
+.custom-card {
+    .form-field{
+        width: 100%;
+    }
+}
+

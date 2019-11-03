@@ -1,5 +1,5 @@
 <button mat-raised-button color="primary" class="my-3" (click)="openCardToCreate()">NOVA TURMA</button>
-<table id="turma-table" mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+<table mat-table [dataSource]="dataSource" class="custom-table mat-elevation-z8">
     <ng-container matColumnDef="id">
       <th mat-header-cell *matHeaderCellDef> ID </th>
       <td mat-cell *matCellDef="let turma"> {{ turma.id }} </td>
