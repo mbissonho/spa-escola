@@ -4,15 +4,20 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 
-const routes: Routes = [
-  { path: '', redirectTo: 'turmas', pathMatch: 'full' },
-  { path: 'turmas', component: TurmaMasterDetailComponent },
-  { path: 'alunos/:id', component: AlunoMasterDetailComponent },
-  { path: '**', redirectTo: 'turmas' }
+export const appRoutes = {
+  turma: 'turmas',
+  aluno: 'alunos'
+};
+
+const configRoutes: Routes = [
+  { path: '', redirectTo: appRoutes.turma, pathMatch: 'full' },
+  { path: `${appRoutes.turma}`, component: TurmaMasterDetailComponent },
+  { path: `${appRoutes.aluno}/:id`, component: AlunoMasterDetailComponent },
+  { path: '**', redirectTo: appRoutes.turma }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(configRoutes)],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

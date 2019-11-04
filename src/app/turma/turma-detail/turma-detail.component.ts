@@ -1,9 +1,10 @@
+import { appRoutes } from './../../app-routing.module';
 import { Turma } from './../../models';
 import { ExceptionHandlerService } from 'src/app/exception-handler.service';
 import { Router } from '@angular/router';
 import { detailCardStates } from './../../commons';
 import { DialogTemplateComponent } from './../../shared/dialog-template/dialog-template.component';
-import { Component, OnInit, Input, Output } from '@angular/core';
+import { Component, OnInit, Input, Output, AfterViewInit, OnChanges } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { TurmaDataService } from '../turma-data.service';
 import { MessageService } from 'src/app/message.service';
@@ -16,10 +17,9 @@ import { EventEmitter } from '@angular/core';
   styleUrls: ['./turma-detail.component.scss']
 })
 
-export class TurmaDetailComponent implements OnInit {
+export class TurmaDetailComponent implements OnChanges {
 
   @Input() turma = new Turma();
-
   @Output() emitter: EventEmitter<any> = new EventEmitter();
 
   form: FormGroup;
@@ -29,14 +29,19 @@ export class TurmaDetailComponent implements OnInit {
     private formBuilder: FormBuilder,
     private service: TurmaDataService,
     private messageService: MessageService,
-    public dialog: MatDialog,
+    private dialog: MatDialog,
     private router: Router,
     private exceptionHandlerService: ExceptionHandlerService
-  ) { }
-
-  ngOnInit() {
+  ) {
     this.configForm();
-    this.updateTurmaObject(this.turma);
+  }
+
+  ngOnChanges(){
+    if(this.turma.id){
+      this.setOnViewUpdateState();
+    } else {
+      this.setOnCreateState();
+    }
   }
 
   private configForm(){
@@ -47,16 +52,6 @@ export class TurmaDetailComponent implements OnInit {
       titulo: [null, [Validators.required, Validators.maxLength(3), Validators.minLength(3), Validators.pattern('^[0-9]*$')]],
       quantidadeDeAlunos: [null, null]
     });
-  }
-
-  updateTurmaObject(turma: Turma){
-    this.turma = turma;
-    this.form.patchValue(turma);
-    if(this.turma.id){
-      this.setOnViewUpdateState();
-    } else {
-      this.setOnCreateState();
-    }
   }
 
   save(){
@@ -112,17 +107,17 @@ export class TurmaDetailComponent implements OnInit {
   }
 
   viewAlunos(){
-    this.router.navigateByUrl('/alunos/' + this.turma.id);
+    this.router.navigateByUrl(`/${appRoutes.aluno}/${this.turma.id}`);
   }
 
-  setOnViewUpdateState(){
+  private setOnViewUpdateState(){
     this.cardState = detailCardStates.ON_VIEW_UPDATE;
+    this.form.patchValue(this.turma);
   }
 
-  setOnCreateState(){
-    this.form.reset();
-    this.turma = new Turma();
+  private setOnCreateState(){
     this.cardState = detailCardStates.ON_CREATE;
+    this.form.reset();
   }
 
   toggleCardHeaderLabel(){

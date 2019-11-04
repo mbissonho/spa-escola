@@ -1,7 +1,8 @@
+import { ExceptionHandlerService } from './../../exception-handler.service';
 import { Turma } from './../../models';
 import { TurmaDetailComponent } from './../turma-detail/turma-detail.component';
 import { TurmaDataService } from './../turma-data.service';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewChildren } from '@angular/core';
 
 
 
@@ -12,9 +13,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 })
 export class TurmaMasterDetailComponent implements OnInit {
 
-  @ViewChild('card', { static: false}) card: TurmaDetailComponent;
-
-  turmaToViewOrUpdate = new Turma();
+  turmaTwoWayBindedParent = new Turma();
 
   //Table
   displayedColumns: string[] = ['id', 'nomeDoProfessor', 'serie', 'titulo', 'quantidadeDeAlunos'];
@@ -24,41 +23,39 @@ export class TurmaMasterDetailComponent implements OnInit {
   enableTurmaCard = false;
 
   constructor(
-    private service: TurmaDataService
+    private service: TurmaDataService,
+    private exceptionHandlerService: ExceptionHandlerService
   ) {}
 
   ngOnInit() {
-    this.loadTurmas();
+    this.loadTurmasFromApi();
   }
 
-  rowClicked(row: any){
-
-    this.turmaToViewOrUpdate = this.dataSource.filter((turma) => {
-      return turma.id === row.id;
-    })[0];
-
-    if (this.card) {
-      this.card.updateTurmaObject(this.turmaToViewOrUpdate);
-    }
-
-    this.enableTurmaCard = true;
-  }
-
-  loadTurmas(){
+  private loadTurmasFromApi(){
     this.service.load()
     .then((data: any) => {
       this.dataSource = data;
     })
-    .catch(() => {
-      alert('Erro!');
+    .catch((response) => {
+      this.exceptionHandlerService.handle(response.error);
     });
   }
 
+  rowClicked(row: any){
+    this.setEnableTurmaCard();
+    this.turmaTwoWayBindedParent = this.dataSource.filter((turma) => {
+      return turma.id === row.id;
+    })[0];
+  }
+
   openCardToCreate(){
-    this.enableTurmaCard = true;
-    if(this.card) {
-      this.card.form.reset();
-      this.card.setOnCreateState();
+    this.setEnableTurmaCard();
+    this.turmaTwoWayBindedParent = new Turma();
+  }
+
+  private setEnableTurmaCard(){
+    if(!this.enableTurmaCard){
+      this.enableTurmaCard = true;
     }
   }
 
