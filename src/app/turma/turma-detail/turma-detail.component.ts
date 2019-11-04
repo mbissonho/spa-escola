@@ -1,10 +1,9 @@
-import { appRoutes } from './../../app-routing.module';
 import { Turma } from './../../models';
 import { ExceptionHandlerService } from 'src/app/exception-handler.service';
 import { Router } from '@angular/router';
-import { detailCardStates } from './../../commons';
+import { detailCardStates, appRoutes } from './../../commons';
 import { DialogTemplateComponent } from './../../shared/dialog-template/dialog-template.component';
-import { Component, OnInit, Input, Output, AfterViewInit, OnChanges } from '@angular/core';
+import { Component, Input, Output, OnChanges } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { TurmaDataService } from '../turma-data.service';
 import { MessageService } from 'src/app/message.service';

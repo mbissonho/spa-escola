@@ -1,8 +1,7 @@
 import { ExceptionHandlerService } from './../../exception-handler.service';
 import { Turma } from './../../models';
-import { TurmaDetailComponent } from './../turma-detail/turma-detail.component';
 import { TurmaDataService } from './../turma-data.service';
-import { Component, OnInit, ViewChild, ViewChildren } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 
 
@@ -31,7 +30,7 @@ export class TurmaMasterDetailComponent implements OnInit {
     this.loadTurmasFromApi();
   }
 
-  private loadTurmasFromApi(){
+  loadTurmasFromApi(){
     this.service.load()
     .then((data: any) => {
       this.dataSource = data;

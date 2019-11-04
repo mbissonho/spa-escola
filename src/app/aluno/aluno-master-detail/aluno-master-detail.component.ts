@@ -1,9 +1,9 @@
+import { appRoutes } from './../../commons';
 import { Aluno } from './../../models';
 import { ExceptionHandlerService } from 'src/app/exception-handler.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlunoDataService } from './../aluno-data.service';
-import { AlunoDetailComponent } from './../aluno-detail/aluno-detail.component';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 
 
 
@@ -14,14 +14,13 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 })
 export class AlunoMasterDetailComponent implements OnInit {
 
-  @ViewChild('card', { static: false}) card: AlunoDetailComponent;
-
   private turmaId: number;
 
-  alunoToViewOrUpdate = new Aluno();
+  alunoTwoWayBinded = new Aluno();
 
   //Table
   displayedColumns: string[] = ['id', 'nome', 'quantidadeDeFaltas', 'mediaDeNotas'];
+  
   public dataSource: Aluno[];
 
   //Card
@@ -36,23 +35,17 @@ export class AlunoMasterDetailComponent implements OnInit {
 
   ngOnInit() {
     this.turmaId = this.route.snapshot.params['id'];
-    this.loadAlunos();
+    this.loadAlunosFromApi();
   }
 
   rowClicked(row: any){
-
-    this.alunoToViewOrUpdate = this.dataSource.filter((aluno) => {
+    this.setEnableAlunoCard();
+    this.alunoTwoWayBinded = this.dataSource.filter((aluno) => {
       return aluno.id === row.id;
     })[0];
-
-    if (this.card) {
-      this.card.updateAlunoObject(this.alunoToViewOrUpdate);
-    }
-
-    this.enableAlunoCard = true;
   }
 
-  loadAlunos(){
+  loadAlunosFromApi(){
     this.service.loadByTurma(this.turmaId)
     .then((data: any) => {
       this.dataSource = data;
@@ -64,15 +57,17 @@ export class AlunoMasterDetailComponent implements OnInit {
   }
 
   openCardToCreate(){
-    this.enableAlunoCard = true;
-    if(this.card) {
-      this.card.form.reset();
-      this.card.setOnCreateState();
-    }
+    this.alunoTwoWayBinded = new Aluno();
   }
 
   comeBack(){
-    this.router.navigateByUrl('turmas');
+    this.router.navigateByUrl(appRoutes.turma);
+  }
+
+  private setEnableAlunoCard(){
+    if(!this.enableAlunoCard){
+      this.enableAlunoCard = true;
+    }
   }
 
 }

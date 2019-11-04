@@ -6,7 +6,7 @@ import { AlunoDataService } from './../aluno-data.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { DialogTemplateComponent } from './../../shared/dialog-template/dialog-template.component';
 import { detailCardStates } from './../../commons';
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { ExceptionHandlerService } from 'src/app/exception-handler.service';
 
 @Component({
@@ -14,7 +14,7 @@ import { ExceptionHandlerService } from 'src/app/exception-handler.service';
   templateUrl: './aluno-detail.component.html',
   styleUrls: ['./aluno-detail.component.scss']
 })
-export class AlunoDetailComponent implements OnInit {
+export class AlunoDetailComponent implements OnChanges {
 
   private turmaId;
 
@@ -32,12 +32,17 @@ export class AlunoDetailComponent implements OnInit {
     private dialog: MatDialog,
     private route: ActivatedRoute,
     private exceptionHandlerService: ExceptionHandlerService
-  ) { }
-
-  ngOnInit() {
+  ) { 
     this.turmaId = this.route.snapshot.params['id'];
     this.configForm();
-    this.updateAlunoObject(this.aluno);
+  }
+
+  ngOnChanges(){
+    if(this.aluno.id){
+      this.setOnViewUpdateState();
+    } else {
+      this.setOnCreateState();
+    }
   }
 
   private configForm(){
@@ -50,16 +55,6 @@ export class AlunoDetailComponent implements OnInit {
         id: [ null, Validators.required ]
       })
     });
-  }
-
-  updateAlunoObject(aluno: Aluno){
-    this.aluno = aluno;
-    this.form.patchValue(aluno);
-    if(this.aluno.id){
-      this.setOnViewUpdateState();
-    } else {
-      this.setOnCreateState();
-    }
   }
 
   save(){
@@ -114,15 +109,19 @@ export class AlunoDetailComponent implements OnInit {
     }
   }
 
-  setOnViewUpdateState(){
+  private setOnViewUpdateState(){
     this.cardState = detailCardStates.ON_VIEW_UPDATE;
-    this.form.get('turma').get('id').setValue(this.turmaId);
+    this.form.patchValue(this.aluno);
+    this.setFormTurmaId();
   }
 
-  setOnCreateState(){
+  private setOnCreateState(){
     this.form.reset();
-    this.aluno = new Aluno();
     this.cardState = detailCardStates.ON_CREATE;
+    this.setFormTurmaId();
+  }
+
+  private setFormTurmaId(){
     this.form.get('turma').get('id').setValue(this.turmaId);
   }
 

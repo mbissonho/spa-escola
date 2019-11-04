@@ -27,5 +27,5 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr class="element-mat-row" mat-row *matRowDef="let row; columns: displayedColumns;" (click)="rowClicked(row)"></tr>
  </table>
- <app-aluno-detail #card *ngIf="enableAlunoCard" [aluno]="alunoToViewOrUpdate" (emitter)="loadAlunos($event)" ></app-aluno-detail>
+ <app-aluno-detail *ngIf="enableAlunoCard" [(aluno)]="alunoTwoWayBinded" (emitter)="loadAlunosFromApi($event)" ></app-aluno-detail>
 
