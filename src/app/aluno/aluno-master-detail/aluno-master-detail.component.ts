@@ -57,6 +57,7 @@ export class AlunoMasterDetailComponent implements OnInit {
   }
 
   openCardToCreate(){
+    this.setEnableAlunoCard();
     this.alunoTwoWayBinded = new Aluno();
   }
 
