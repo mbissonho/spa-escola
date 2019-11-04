@@ -42,9 +42,7 @@ export class TurmaMasterDetailComponent implements OnInit {
 
   rowClicked(row: any){
     this.setEnableTurmaCard();
-    this.turmaTwoWayBindedParent = this.dataSource.filter((turma) => {
-      return turma.id === row.id;
-    })[0];
+    this.turmaTwoWayBindedParent = row as Turma;
   }
 
   openCardToCreate(){
