@@ -9,12 +9,15 @@ import { ExceptionHandlerService } from 'src/app/exception-handler.service';
 
 class AlunoDataServiceMock {
 
+
+
   loadByTurma(){
-    return Promise.resolve([]);
+    return Promise.resolve([
+      { id: 1, nome: 'Augusto', quantidadeDeFaltas: 4, mediaDeNotas: 7.5 }
+    ]);
   }
 
 }
-
 
 describe('AlunoMasterDetailComponent', () => {
   
@@ -22,6 +25,7 @@ describe('AlunoMasterDetailComponent', () => {
   let fixture: ComponentFixture<AlunoMasterDetailComponent>;
 
   let alunoDataServiceMock = new AlunoDataServiceMock();
+
   
   beforeEach(async(() => {
 
@@ -55,6 +59,12 @@ describe('AlunoMasterDetailComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('table should contain one line', () => {
+
+    
+
   });
 
 });
