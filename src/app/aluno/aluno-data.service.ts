@@ -14,11 +14,7 @@ export class AlunoDataService {
   constructor(
     private http: HttpClient
   ) { }
-
-  loadByTurma(turmaId: number){
-    return this.http.get(`${this.resourceUrl}/turma/${turmaId}`).toPromise();
-  }
-
+  
   save(aluno: Aluno){
     return this.http.post(this.resourceUrl, aluno).toPromise();
   }

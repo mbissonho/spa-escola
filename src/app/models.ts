@@ -4,6 +4,7 @@ export class Turma {
     serie: number;
     titulo: number;
     quantidadeDeAlunos: number;
+    alunos: Aluno[] = [];
 }
 
 export class Aluno {
