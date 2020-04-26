@@ -1,8 +1,8 @@
 # spa-escola
 
-Projeto para demonstrar um simples CRUD, sendo essa parte o frontend SPA com o Framework Angular utilizando também o client GraphQL [Apollo](https://www.apollographql.com/docs/angular/).
+Projeto para demonstrar um simples CRUD, sendo essa parte o frontend [SPA](https://en.wikipedia.org/wiki/Single-page_application) com o Framework Angular utilizando também o client GraphQL [Apollo](https://www.apollographql.com/docs/angular/).
 
-[Backend](https://github.com/mbissonho/api-escola)
+[Demonstração](https://spa-escola.herokuapp.com/) [Backend](https://github.com/mbissonho/api-escola)
 
 ## Para executar:
 

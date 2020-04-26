@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  apiUrl: '',
-  graphqlUrl: ''
+  apiUrl: 'https://mbissonho-api-escola.herokuapp.com',
+  graphqlUrl: 'https://mbissonho-api-escola.herokuapp.com/graphql'
 };

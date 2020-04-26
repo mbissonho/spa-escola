@@ -30,4 +30,4 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr class="element-mat-row" mat-row *matRowDef="let row; columns: displayedColumns;" (click)="rowClicked(row)"></tr>
 </table>
-<app-turma-detail *ngIf="enableTurmaCard" [(turma)]="turmaTwoWayBindedParent" (emitter)="loadTurmasFromApi($event)"></app-turma-detail>
+<app-turma-detail *ngIf="enableTurmaCard" [(turma)]="turmaTwoWayBindedParent" (emitter)="loadTurmasFromApi()"></app-turma-detail>
