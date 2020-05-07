@@ -1,4 +1,3 @@
-import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -10,6 +9,8 @@ import { MatTableModule } from '@angular/material/table';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { DialogTemplateComponent } from './dialog-template/dialog-template.component';
 
@@ -29,6 +30,7 @@ import { DialogTemplateComponent } from './dialog-template/dialog-template.compo
     MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
+    MatProgressSpinnerModule
 
   ],
   exports: [
@@ -44,6 +46,7 @@ import { DialogTemplateComponent } from './dialog-template/dialog-template.compo
     MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
+    MatProgressSpinnerModule,
 
     DialogTemplateComponent,
   ],

@@ -12,6 +12,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TurmaMasterDetailComponent implements OnInit {
 
+  isLoading = true;
+
   turmaTwoWayBindedParent = new Turma();
 
   //Table
@@ -31,9 +33,13 @@ export class TurmaMasterDetailComponent implements OnInit {
   }
 
   loadTurmasFromApi(){
+
+    this.isLoading = true;
+
     this.service.load()
     .then((data: any) => {
       this.dataSource = data;
+      this.isLoading = false;
     })
     .catch((response) => {
       this.exceptionHandlerService.handle(response.error);
