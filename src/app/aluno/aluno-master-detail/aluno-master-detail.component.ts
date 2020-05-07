@@ -16,6 +16,8 @@ import gql from 'graphql-tag';
 })
 export class AlunoMasterDetailComponent implements OnInit {
 
+  isLoading = true;
+
   private turmaId: number;
 
   alunoTwoWayBinded = new Aluno();
@@ -53,6 +55,8 @@ export class AlunoMasterDetailComponent implements OnInit {
   
   loadTurmaFromApi(){
 
+    this.isLoading = true;
+
     this.graphQLQuery = this.apollo.watchQuery({
       query: gql`{
         turma(id: ${this.turmaId}){
@@ -71,13 +75,16 @@ export class AlunoMasterDetailComponent implements OnInit {
     .valueChanges
     .subscribe((resp: any) => {
       this.turma = resp.data.turma as Turma;
+      this.isLoading = false;
     });
 
   }
 
   refreshData(){
     if(this.graphQLQuery){
+      this.isLoading = true;
       this.graphQLQuery.refetch();
+      this.isLoading = false;
     }
   }
 

@@ -29,5 +29,13 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr class="element-mat-row" mat-row *matRowDef="let row; columns: displayedColumns;" (click)="rowClicked(row)"></tr>
  </table>
+
+ <mat-card *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center">
+  <mat-progress-spinner 
+      color="primary" 
+      mode="indeterminate">
+  </mat-progress-spinner>
+</mat-card>
+
  <app-aluno-detail *ngIf="enableAlunoCard" [(aluno)]="alunoTwoWayBinded" (alunoDetailEvent)="refreshData()"></app-aluno-detail>
 
