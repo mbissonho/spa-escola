@@ -84,7 +84,6 @@ export class AlunoMasterDetailComponent implements OnInit {
     if(this.graphQLQuery){
       this.isLoading = true;
       this.graphQLQuery.refetch();
-      this.isLoading = false;
     }
   }
 
