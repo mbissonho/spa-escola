@@ -4,7 +4,7 @@ import { ExceptionHandlerService } from 'src/app/exception-handler.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlunoDataService } from './../aluno-data.service';
 import { Component, OnInit} from '@angular/core';
-import { Apollo } from 'apollo-angular';
+import { Apollo, QueryRef } from 'apollo-angular';
 import gql from 'graphql-tag';
 
 
@@ -28,6 +28,9 @@ export class AlunoMasterDetailComponent implements OnInit {
   //Card
   enableAlunoCard = false;
 
+  //Apollo 
+  graphQLQuery: QueryRef<any>; 
+
   constructor(
     private service: AlunoDataService,
     private route: ActivatedRoute,
@@ -38,7 +41,7 @@ export class AlunoMasterDetailComponent implements OnInit {
 
   ngOnInit() {
     this.turmaId = this.route.snapshot.params['id'];
-    this.loadAlunosFromApi();
+    this.loadTurmaFromApi();
   }
 
   rowClicked(row: any){
@@ -48,9 +51,9 @@ export class AlunoMasterDetailComponent implements OnInit {
     })[0];
   }
   
-  loadAlunosFromApi(){
+  loadTurmaFromApi(){
 
-    this.apollo.query({
+    this.graphQLQuery = this.apollo.watchQuery({
       query: gql`{
         turma(id: ${this.turmaId}){
           titulo
@@ -62,10 +65,20 @@ export class AlunoMasterDetailComponent implements OnInit {
           }
         }
       }`
-    }).subscribe((resp: any) => {
+    });
+
+    this.graphQLQuery
+    .valueChanges
+    .subscribe((resp: any) => {
       this.turma = resp.data.turma as Turma;
     });
 
+  }
+
+  refreshData(){
+    if(this.graphQLQuery){
+      this.graphQLQuery.refetch();
+    }
   }
 
   openCardToCreate(){

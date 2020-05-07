@@ -6,8 +6,9 @@ import { AlunoDataService } from './../aluno-data.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { DialogTemplateComponent } from './../../shared/dialog-template/dialog-template.component';
 import { detailCardStates } from './../../commons';
-import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
+import { Component, Input, Output, OnChanges } from '@angular/core';
 import { ExceptionHandlerService } from 'src/app/exception-handler.service';
+import { EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-aluno-detail',
@@ -19,8 +20,7 @@ export class AlunoDetailComponent implements OnChanges {
   private turmaId;
 
   @Input() aluno = new Aluno();
-
-  @Output() emitter: EventEmitter<any> = new EventEmitter();
+  @Output() alunoDetailEvent: EventEmitter<any> = new EventEmitter();
 
   form: FormGroup;
   cardState = detailCardStates.ON_CREATE;
@@ -61,7 +61,7 @@ export class AlunoDetailComponent implements OnChanges {
     this.service.save(this.aluno)
     .then((aluno: Aluno) => {
       this.messageService.doMessage(`Aluno(a) ${aluno.nome} criado(a) com sucesso`);
-      this.emitter.emit('resourceChanged');
+      this.alunoDetailEvent.emit('resourceChanged');
       this.setOnCreateState();
     }).catch((response: any) => { 
       this.exceptionHandlerService.handle(response.error);
@@ -72,7 +72,7 @@ export class AlunoDetailComponent implements OnChanges {
     this.service.update(this.aluno)
     .then((aluno: Aluno) => {
       this.messageService.doMessage(`Aluno(a) ${aluno.nome} atualizado(a) com sucesso`);
-      this.emitter.emit('resourceChanged');
+      this.alunoDetailEvent.emit('resourceChanged');
       this.setOnCreateState();
     }).catch((response: any) => { 
       this.exceptionHandlerService.handle(response.error);
@@ -92,7 +92,7 @@ export class AlunoDetailComponent implements OnChanges {
     this.service.delete(this.aluno.id)
     .then(() => {
       this.messageService.doMessage(`Aluno(a) ${this.aluno.nome} excluído(a) com sucesso`);
-      this.emitter.emit('resourceChanged');
+      this.alunoDetailEvent.emit('resourceChanged');
       this.setOnCreateState();
     })
     .catch((response: any) => { 
