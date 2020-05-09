@@ -82,6 +82,7 @@ export class AlunoMasterDetailComponent implements OnInit {
 
   refreshData(){
     if(this.graphQLQuery){
+      this.turma = new Turma();
       this.isLoading = true;
       this.graphQLQuery.refetch();
     }
